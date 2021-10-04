@@ -1,0 +1,93 @@
+<!-- This is just temporary as a mockup navigation layer -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>WireGuard Interfaces</title>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="../../static/css/main.css"/>
+		<script src="../../static/js/search.js"></script>
+        <script src="../../static/js/global.js"></script>
+    </head>
+    <body onload="getGlobals();">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="../../views/index.html">WireGuard Connection Manager</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li><a href="../../views/interfaces/index.html">Interfaces</a></li>
+                    <li class="active"><a href="../../views/peers/index.html">Peers</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-tasks"></span> <span id="page_header_api_url"></span></a></li>
+                    <li><a href="../login/index.html"><span class="glyphicon glyphicon-log-in"></span> BACK</a></li>
+                </ul>
+            </div>
+        </nav>
+		<div class="parent-container" style="height: 100%; padding: 50px;">
+            <div class="row" style="margin: 50px;">
+                <div class="col-sm-6" style="padding: 10px;">
+                    <div class="card">
+                        <div class="card-body">
+							<table class="table">
+                                <tr>
+                                    <td style="border: none;"><h3 class="card-title">PEERS</h3></td>
+                                    <td style="border: none;"><input name="search_input" id="search_input" type="text" placeholder="Search..." class="inputbox" onkeyup="searchTable()"/></td></td>
+                                    <td style="border: none;"><p id="search_result_count" style="color: #464640" class="text-success text-center">No Search</p></td>
+                                </tr>
+                            </table>
+                            <hr style="background-color:#fff;height:1px;margin-top:5px"/>
+                            <table class="table" id="table_to_search">
+                                <thead>
+                                    <tr>
+                                        <th style="border: none;">NAME</th>
+                                        <th style="border: none;">DESCRIPTION</th>
+                                        <th style="border: none;">INTERFACE</th>
+                                        <th style="border: none;"><a href="../interfaces/index.html" class="btn-normal"><span class="glyphicon glyphicon-plus-sign"></span> ADD</a></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="peer_table_body">
+                                    <!-- TO BE FILLED BY FUNCTION -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            async function getPeers() {
+
+                // get data from API
+                const response = await fetch("http://localhost:5000/peers");
+                const data = response.json();
+                console.log(data);
+
+                // get table and reset contents
+                var table = document.getElementById("peer_table_body");
+                table.innerHTML = "";
+
+                // populate table
+                for (var peer_id in data.peers) {
+                    var row = table.insertRow(0);
+                    var cell0 = row.insertCell(0);
+                    var cell1 = row.insertCell(1);
+                    var cell2 = row.insertCell(2);
+                    var cell3 = row.insertCell(3);
+
+                    cell0.innerHTML = data.peers[peer_id].name;
+                    cell1.innerHTML = data.peers[peer_id].description;
+                    cell2.innerHTML = data.peers[peer_id].interface;
+                    cell3.innerHTML = "<a href=\"../interfaces/edit.html?peer_id=" + peer_id + "\"><span class=\"glyphicon glyphicon-pencil\"></span></a>";
+
+                    cell0.style.border = "none";
+                    cell1.style.border = "none";
+                    cell2.style.border = "none";
+                    cell3.style.border = "none";
+                }
+            }
+        </script>
+    </body>
+</html>
