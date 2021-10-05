@@ -7,18 +7,18 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="../../static/css/main.css"/>
-		<script src="../../static/js/search.js"></script>
-        <script src="../../static/js/global.js"></script>
+		<script src="/static/js/search.js"></script>
+        <script src="/static/js/global.js"></script>
     </head>
     <body onload="getGlobals();">
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="../../views/index.html">WireGuard Connection Manager</a>
+                    <a class="navbar-brand" href="/views/index.html">WireGuard Connection Manager</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li><a href="../../views/interfaces/index.html">Interfaces</a></li>
-                    <li class="active"><a href="../../views/peers/index.html">Peers</a></li>
+                    <li><a href="../../interfaces/index.html">Interfaces</a></li>
+                    <li class="active"><a href="../../peers/index.html">Peers</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#"><span class="glyphicon glyphicon-tasks"></span> <span id="page_header_api_url"></span></a></li>
@@ -61,17 +61,21 @@
             async function getPeers() {
 
                 // get data from API
-                url = global_get_api_url() + "/peers";
-                const response = await fetch(url);
-                const data = await response.json();
-                console.log(data);
+                peer_url = global_get_api_url() + "/peers";
+				iface_url = global_get_api_url() + "/interfaces";
+
+                const peer_response = await fetch(peer_url);
+				const iface_response = await fetch(iface_url);
+
+                const peer_data = await peer_response.json();
+				const iface_data = await iface_response.json(); 
 
                 // get table and reset contents
                 var table = document.getElementById("peer_table_body");
                 table.innerHTML = "";
 
                 // populate table
-                for (var peer_id in data.peers) {
+                for (var peer in peer_data) {
 
                     // create row and cells
                     var row = table.insertRow(0);
@@ -81,10 +85,10 @@
                     var cell3 = row.insertCell(3);
 
                     // populate the table
-                    cell0.innerHTML = data.peers[peer_id].name;
-                    cell1.innerHTML = data.peers[peer_id].description;
-                    cell2.innerHTML = data.peers[peer_id].interface;
-                    cell3.innerHTML = "<a href=\"../interfaces/edit.html?peer_id=" + peer_id + "\"><span class=\"glyphicon glyphicon-pencil\"></span></a>";
+                    cell0.innerHTML = peer_data[peer].name;
+                    cell1.innerHTML = peer_data[peer].description;
+                    cell2.innerHTML = "<a href=\"/views/interfaces/index.html?iface_id=" + peer_data[peer].interface_id + "\"><span class=\"glyphicon glyphicon-pencil\"></span></a>";
+                    cell3.innerHTML = "<a href=\"/views/peers/edit.html?peer_id=" + peer_data[peer].id + "\"><span class=\"glyphicon glyphicon-pencil\"></span></a>";
 
                     // set cell styles to not have a border
                     cell0.style.border = "none";

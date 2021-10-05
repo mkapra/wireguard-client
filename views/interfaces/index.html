@@ -7,22 +7,22 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="../../static/css/main.css"/>
-        <script src="../../static/js/search.js"></script>
-        <script src="../../static/js/global.js"></script>
+        <script src="/static/js/search.js"></script>
+        <script src="/static/js/global.js"></script>
     </head>
     <body onload="getGlobals();">
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
               <div class="navbar-header">
-                <a class="navbar-brand" href="../../views/index.html">WireGuard Connection Manager</a>
+                <a class="navbar-brand" href="/views/index.html">WireGuard Connection Manager</a>
               </div>
               <ul class="nav navbar-nav">
-                <li class="active"><a href="../../views/interfaces/index.html">Interfaces</a></li>
-                <li><a href="../../views/peers/index.html">Peers</a></li>
+                <li class="active"><a href="/views/interfaces/index.html">Interfaces</a></li>
+                <li><a href="/views/peers/index.html">Peers</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="#"><span class="glyphicon glyphicon-tasks"></span> <span id="page_header_api_url"></span></a></li>
-                <li><a href="../login/index.html"><span class="glyphicon glyphicon-log-in"></span> BACK</a></li>
+                <li><a href="/views/login/index.html"><span class="glyphicon glyphicon-log-in"></span> BACK</a></li>
               </ul>
             </div>
         </nav>
@@ -43,22 +43,22 @@
                                 <tr>
                                     <th style="border: none;">NAME</th>
                                     <th style="border: none;">DESCRIPTION</th>
-                                    <th style="border: none;"><a href="../interfaces/index.html" class="btn-normal"><span class="glyphicon glyphicon-plus-sign"></span> ADD</a></th>
+                                    <th style="border: none;"><a href="/views/interfaces/index.html" class="btn-normal"><span class="glyphicon glyphicon-plus-sign"></span> ADD</a></th>
                                 </tr>
                                 <tr>
                                     <td style="border: none;">wg0</td>
                                     <td style="border: none;">Default Interface for Mobile Clients</td>
-                                    <td style="border: none;"><a href="../interfaces/edit.html"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                    <td style="border: none;"><a href="/views/interfaces/edit.html"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                 </tr>
                                 <tr>
                                     <td style="border: none;">wg1</td>
                                     <td style="border: none;">Servers</td>
-                                    <td style="border: none;"><a href="../interfaces/edit.html"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                    <td style="border: none;"><a href="/views/interfaces/edit.html"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                 </tr>
                                 <tr>
                                     <td style="border: none;">wg2</td>
                                     <td style="border: none;">Static Desktop Clients</td>
-                                    <td style="border: none;"><a href="../interfaces/edit.html"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                    <td style="border: none;"><a href="/views/interfaces/edit.html"><span class="glyphicon glyphicon-pencil"></span></a></td>
                                 </tr>
                             </table>
                         </div>
