@@ -33,22 +33,23 @@
                         <div class="card-body">
 							<table class="table">
                                 <tr>
-                                    <td style="border: none;"><h3 class="card-title">PEERS</h3></td>
-                                    <td style="border: none;"><input name="search_input" id="search_input" type="text" placeholder="Search..." class="inputbox" onkeyup="searchTable()"/></td></td>
-                                    <td style="border: none;"><p id="search_result_count" style="color: #464640" class="text-success text-center">No Search</p></td>
+                                    <th style="border: none;"><h3 class="card-title">DNS SERVERS</h3></th>
+                                    <th style="border: none;">
+                                        <input name="search_input" id="new_dns_server_ip" type="text" placeholder="New DNS-Server" class="inputbox_small"/>
+                                        <a onclick="addDNSServer();"><span class="glyphicon glyphicon-plus"></span></a>
+                                    </th>
                                 </tr>
                             </table>
                             <hr style="background-color:#fff;height:1px;margin-top:5px"/>
-                            <table class="table" id="table_to_search" onload="getPeers();">
+                            <table class="table" onload="fillTable('dns_servers', 'dns_server_body');">
                                 <thead>
                                     <tr>
-                                        <th style="border: none;">NAME</th>
+                                        <th style="border: none;">#</th>
+                                        <th style="border: none;">IP ADRESS</th>
                                         <th style="border: none;">DESCRIPTION</th>
-                                        <th style="border: none;">INTERFACE</th>
-                                        <th style="border: none;"><a href="../interfaces/index.html" class="btn-normal"><span class="glyphicon glyphicon-plus-sign"></span> ADD</a></th>
                                     </tr>
                                 </thead>
-                                <tbody id="peer_table_body">
+                                <tbody id="dns_server_body">
                                     <!-- TO BE FILLED BY FUNCTION -->
                                 </tbody>
                             </table>
@@ -58,50 +59,25 @@
             </div>
         </div>
         <script>
-            async function getPeers() {
 
-                // get data from API
-                peer_url = global_get_api_url() + "/peers";
-				iface_url = global_get_api_url() + "/interfaces";
+            // post new dns_server to API
+            async function addDNSServer() {
+                
+                // get data
+                var dns_server_ip = document.getElementById("new_dns_server_ip").value;
+                document.getElementById("new_dns_server_ip").value = "";
+                
+                // make API request
+                data = { ip: dns_server_ip}; 
+                const dns_response = await post_with_fetch("dns_servers", data);
 
-                const peer_response = await fetch(peer_url);
-				const iface_response = await fetch(iface_url);
-
-                const peer_data = await peer_response.json();
-				const iface_data = await iface_response.json(); 
-
-                // get table and reset contents
-                var table = document.getElementById("peer_table_body");
-                table.innerHTML = "";
-
-                // populate table
-                for (var peer in peer_data) {
-
-                    // create row and cells
-                    var row = table.insertRow(0);
-                    var cell0 = row.insertCell(0);
-                    var cell1 = row.insertCell(1);
-                    var cell2 = row.insertCell(2);
-                    var cell3 = row.insertCell(3);
-
-                    // populate the table
-                    cell0.innerHTML = peer_data[peer].name;
-                    cell1.innerHTML = peer_data[peer].description;
-                    cell2.innerHTML = "<a href=\"/views/interfaces/index.html?iface_id=" + peer_data[peer].interface_id + "\"><span class=\"glyphicon glyphicon-pencil\"></span></a>";
-                    cell3.innerHTML = "<a href=\"/views/peers/edit.html?peer_id=" + peer_data[peer].id + "\"><span class=\"glyphicon glyphicon-pencil\"></span></a>";
-
-                    // set cell styles to not have a border
-                    cell0.style.border = "none";
-                    cell1.style.border = "none";
-                    cell2.style.border = "none";
-                    cell3.style.border = "none";
-                }
+                fillTable('dns_servers', 'dns_server_body');
             }
 
             // load the table once and be done with it
             document.addEventListener('readystatechange', event => {
                 if (event.target.readyState === "complete") {
-                    getPeers();
+                    fillTable('dns_servers', 'dns_server_body');
                 }
             });
 

@@ -34,7 +34,25 @@ body {
     font-weight:normal;
 }
 
+.inputbox_small {
+    border:2px solid #464646;
+    padding:1px;
+    width:150px;
+    color:#fff;
+    background-color:#000;
+    border-radius:1px;
+    transition: all 0.5s;
+    font-weight:normal;
+}
+
 .inputbox:focus,.inputbox:hover {
+    border:2px solid blue;
+    color:#fff;
+    background-color:#000;
+    font-weight:bold;
+}
+
+.inputbox_small:focus,.inputbox_small:hover {
     border:2px solid blue;
     color:#fff;
     background-color:#000;
