@@ -4,28 +4,17 @@
     <head>
         <meta charset="utf-8">
         <title>Overview</title>
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="../static/css/main.css"/>
-        <script src="../static/js/global.js"></script>
+        <link rel="shortcut icon" type="image/jpg" href="/static/img/favicon.ico"/>
+        <link rel="stylesheet" href="/static/css/main.css"/>
+        <link rel="stylesheet" href="/static/css/sidenav.css"/>
+        <script src="/static/js/global.js"></script>
+        <script src="/static/js/structure.js"></script>
     </head>
-    <body onload="getGlobals();">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-              <div class="navbar-header">
-                <a class="navbar-brand" href="/views/index.html">WireGuard Connection Manager</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li><a href="/views/interfaces/index.html">Interfaces</a></li>
-                    <li><a href="/views/peers/index.html">Peers</a></li>
-                    <li><a href="/views/system/index.html">System</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-tasks"></span> <span id="page_header_api_url"></span></a></li>
-                    <li><a href="/views/login/index.html"><span class="glyphicon glyphicon-log-in"></span> BACK</a></li>
-                </ul>
-            </div>
+    <body onload="createNavBody(); getGlobals();">
+        <nav class="sidenav" id="main_page_navigation_bar">
         </nav>
+        
+        <div class="page-content">
         <div class="parent-container" style="height: 100%; padding: 50px;">
             <div class="row" style="margin: 50px;">
                 <div class="col-sm-6" style="padding: 10px;">
@@ -39,7 +28,7 @@
                                     <td style="border: none;">3</td>
                                 </tr>
                             </table>
-                            <a href="interfaces/index.html" class="btn-normal">View Interfaces</a>
+                            <a href="/views/interfaces/index.html" class="btn btn-primary">View Interfaces</a>
                         </div>
                     </div>
                 </div>
@@ -54,11 +43,12 @@
                                     <td style="border: none;">9</td>
                                 </tr>
                             </table>
-                            <a href="peers/index.html" class="btn-normal">View Peers</a>
+                            <a href="/views/peers/index.html" class="btn btn-primary">View Peers</a>
                         </div>  
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </body>
 </html>

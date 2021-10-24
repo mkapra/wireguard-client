@@ -1,5 +1,38 @@
-.loginholder {
-    padding:25px 50px 25px 50px;
-    background-color:#00000000;
-    display:inline-block;
+input { 
+	width: 50%; 
+    margin: auto;
+	margin-bottom: 10px; 
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 4px;
+}
+
+.connect_button { 
+	display: inline-block; 
+	padding: 4px 10px 4px; 
+	margin-bottom: 0; 
+	font-size: 13px; 
+	line-height: 18px; 
+	text-align: center;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75); 
+	vertical-align: middle;
+}
+
+.connection_error {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+    background-color: lightcoral;
+   /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
+    font-size: 15px;
+    border: 1px solid rgb(255, 80, 0);
+    border-radius: 4px;
+    padding: 4px 10px 4px;
+    display: none;
+}
+
+.connection_error_text {
+    color: black;
+    font-weight: normal;
+    text-shadow: none;
 }

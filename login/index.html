@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+    	<meta charset="utf-8"/>
+		<title>Connect to API</title>
+        <link rel="shortcut icon" type="image/jpg" href="/static/img/favicon.ico"/>
+
+		<link rel="stylesheet" href="/static/css/main.css"/>
+        <link rel="stylesheet" href="/static/css/login.css"/>
+
+        <script src="/static/js/apiClient.js"></script>
+        <script src="/static/js/global.js"></script>
+  	</head>
+        <div class="header">
+            <img src="/static/img/wireguard.svg" class="wireguard-logo" alt="WireGuard Logo (www.wireguard.com)">
+        </div>
+        <div class="column about-wireguard-manager">
+            <div class="login">
+                <h1>Connect</h1>
+                <div>
+                    <input  type="text"     id="api_url_input"   placeholder="http://your.api.server" required="required" />
+                    <input  type="password" id="api_token_input" placeholder="SuperSecretAPIToken :O" required="required" />
+                    <br/>
+                    <button type="submit"   id="connect_button"  class="connect_button">
+                        Connect
+                    </button>
+                </div>
+                <br/>
+                <div class="connection_error" id="connection_error">
+                    <span>Failed to connect to API: <span class="connection_error_text" id="connection_error_reason"></span></span>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+			window.onload = async function() {
+                localStorage.clear();
+
+                // set up button event handler
+				document.getElementById("connect_button").onclick = async function() {
+					localStorage.setItem('api_url', document.getElementById('api_url_input').value);
+					localStorage.setItem('api_token', document.getElementById('api_token_input').value);
+
+                    var res = await api_connection_check();
+                    if (res.success != true) {
+                        console.log("API Connection failed: " + res.message);
+
+                        document.getElementById("connection_error").style.display = "block";
+                        document.getElementById("connection_error_reason").innerHTML = res.message;
+                        document.getElementById("api_token_input").value = "";
+                        window.location.replace("/login");
+                    } else {
+                        window.location.replace("/");
+                    }
+				}
+			}
+		</script>
+    </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+    	<meta charset="utf-8"/>
+		<title>WireGuard Connection Manager</title>
+        <link rel="shortcut icon" type="image/jpg" href="/static/img/favicon.ico"/>
+		<link rel="stylesheet" href="/static/css/main.css"/>
+        <script src="/static/js/global.js"></script>
+        <script src="static/js/apiClient.js"></script>
+        <script src="/static/js/nav.js"></script>
+  	</head>
+	<body onload="check_api_connection(); init_footer();">
+        <div class="header">
+            <img src="/static/img/wireguard.svg" class="wireguard-logo" alt="WireGuard Logo (www.wireguard.com)">
+        </div>
+        <div class="column about-wireguard-manager">
+            <div>
+                <h1>WireGuard Connection Manager</h1>
+                <p>The WireGuard Connection Manager, WGCM for short, is an API-Based software to automate and abstract the creation, management, access control and statistic analysis of a sophisticated WireGuard VPN installation.</p>
+                <p>What you are looking at is the offical HTML, CSS and Javascript based frontend application to control the underlying API. This desing makes it possible to use any other compliant software to integrate with WGCM.</p>
+                <p>In its current form the API and also this frontend application do not support all planned featuers and may behave unexpectedly. <b>This version is not ready for production use.</b></p>
+            </div>
+            <div class="api-information">
+                <hr>
+                <table>
+                     <tr>
+                        <td><span class="label">Connected to: </span></td>
+                        <td><span class="value" id="current_api_connection_url"></span></td>
+                        <td><span class="label">API Version: </span></td>
+                        <td><span class="value" id="current_api_connection_version"></span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="label">Last API Call Duration: </span></td>
+                        <td><span class="value" id="last_api_call_response_duration"></span></td>
+                        <td><span class="label">Frontend Version: </span></td>
+                        <td><span class="value" id="current_frontend_version"></span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="column">
+            <div class="navigation-section">
+                <a class="navigation-card" href="/vpn/interfaces"><span class="navigation-card-text">WireGuard Interfaces</span></a>
+                <a class="navigation-card" href="/vpn/peers"><span class="navigation-card-text">WireGuard Peers</span></a>
+                <a class="navigation-card" href="/system/dns-servers"><span class="navigation-card-text">DNS Servers</span></a>
+                <a class="navigation-card" href="/system/iptables"><span class="navigation-card-text">IP Table Rulesets</span></a>
+                <a class="navigation-card" href="/vpn/statistics"><span class="navigation-card-text">Traffic Statistics</span></a>
+                <a class="navigation-card" href="/login"><span class="navigation-card-text">Logout</span></a>
+            </div>
+        </div>
+    </body>
+</html>

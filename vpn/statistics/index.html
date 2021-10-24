@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+    	<meta charset="utf-8"/>
+		<title>Traffic Statistics</title>
+        <link rel="shortcut icon" type="image/jpg" href="/static/img/favicon.ico"/>
+
+		<link rel="stylesheet" href="/static/css/main.css"/>
+        <link rel="stylesheet" href="/static/css/nav.css"/>
+        <link rel="stylesheet" href="/static/css/statistics.css"/>
+
+        <script src="/static/js/global.js"></script>
+        <script src="/static/js/apiClient.js"></script>
+        <script src="/static/js/nav.js"></script>
+        <script src="/static/js/table.js"></script>
+
+  	</head>
+	<body onload="check_api_connection(); init_nav(); init_footer();">
+        <nav class="sidenav" id="main_page_navigation"></nav>
+        <div class="main">
+            <div class="header">
+                <img src="/static/img/wireguard.svg" class="wireguard-logo" alt="WireGuard Logo (www.wireguard.com)">
+            </div>
+            <div class="column system-page-content">
+                <h3>Peer Traffic from all Interfaces</h3>
+                <table class="system-stats-table no-border">
+                    <tbody>
+                        <tr>
+                            <td><div class="chart" id="peer_traffic_recv"></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="system-stats-table no-border" style="float: right;">
+                    <tbody>
+                        <tr>
+                            <td><div class="chart" id="peer_traffic_sent"></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <footer class="main_page_footer">
+            <div class="footer-container">
+                <div class="api-information">
+                    <table>
+                        <tr>
+                            <td><span class="label">Connected to: </span></td>
+                            <td><span class="value" id="current_api_connection_url"></span></td>
+                            <td><span class="label">API Version: </span></td>
+                            <td><span class="value" id="current_api_connection_version"></span></td>
+                            <td><span class="label">Last API Call Duration: </span></td>
+                            <td><span class="value" id="last_api_call_response_duration"></span></td>
+                            <td><span class="label">Frontend Version: </span></td>
+                            <td><span class="value" id="current_frontend_version"></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </footer>
+        <!--<script src="https://code.jscharting.com/latest/jscharting.js"></script>-->
+        <script src="/static/js/external/jscharting.js"></script>
+        <script>
+            async function build_chart() {
+                const res = await get_with_fetch(get_api_url() + "/trafficstats/0");
+                var series_sent = []
+                var series_recv = []
+                var usable_data = {}
+
+                // turn the data into a usable format
+                for (var timestamp in res) {
+                    var cur = res[timestamp];
+                    if (timestamp == 'API_CLIENT_REQUEST_TIME') {
+                        continue;
+                    }
+                    for (var pkey in cur) {
+                       // console.log(timestamp + ": " + pkey);
+                        var dataset = cur[pkey];
+                        if (usable_data.hasOwnProperty(pkey) != true) {
+                            usable_data[pkey] = {};
+                        }
+                        usable_data[pkey][timestamp] = { 
+                            sent: dataset.bytes_sent,
+                            recv: dataset.bytes_received
+                        };
+                    }
+                }
+
+                // make data usable for jscharting
+                for (var pkey in usable_data) {
+                    var cur = usable_data[pkey];
+                    var points_sent = [];
+                    var points_recv = [];
+                    for (var timestamp in cur) {
+                        var d = new Date(parseInt(timestamp));
+                        var hours   = (d.getHours()   < 10) ? "0" + d.getHours()   : d.getHours();
+                        var minutes = (d.getMinutes() < 10) ? "0" + d.getMinutes() : d.getMinutes();
+                        var formattedTime = hours + ":" + minutes;
+
+                        points_sent.unshift({x: formattedTime, y: cur[timestamp].sent / 1024 / 1024});
+                        points_recv.unshift({x: formattedTime, y: cur[timestamp].recv / 1024 / 1024});
+                    }
+                    series_sent.unshift({name: pkey, points: points_sent.reverse()});
+                    series_recv.unshift({name: pkey, points: points_recv.reverse()});
+                }
+
+                // create chart
+                JSC.Chart('peer_traffic_sent', {
+                    type: 'area',
+                    defaultSeries_type: 'line',
+                    yAxis: { label_text: 'Mbyte sent' }, 
+                    xAxis: { label_text: 'Time' },    
+                    title_label_text: 'Peers Mbyte sent', 
+                    series: series_sent
+                });
+                JSC.Chart('peer_traffic_recv', {
+                    type: 'area',
+                    defaultSeries_type: 'line',
+                    yAxis: { label_text: 'Mbyte received' }, 
+                    xAxis: { label_text: 'Time' },    
+                    title_label_text: 'Peers Mbyte received', 
+                    series: series_recv
+                });
+            }
+
+            // load data
+            document.addEventListener('readystatechange', event => {
+                if (event.target.readyState === "complete") {
+                    build_chart();
+                }
+            });
+        </script>
+    </body>
+</html>

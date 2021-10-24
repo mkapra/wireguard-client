@@ -1,85 +1,159 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
-    color:#464640;
-    font-weight:bold;
-    font-family:'Montserrat', sans-serif;
-    font-size:16px;
-   /* background-image:url(../img/background.jpeg); */
-    background-color: #000;
-    width:100%;
-    height:100%;
-    padding:0px;
-    margin:0px;
+    font-family: "Helvetica", sans-serif;
 }
 
-.navbar {
-    background-color:#000;
-    opacity:0.9;
+/* Header Title */
+body div.header {
+    padding: 40px;
+    text-align: center;
+    background-color: #e4e4e4;
+    margin: 20px;
+    font-size: 20px;
+    width: 98%;
 }
 
-.parent-container {
-    width:100%;
-    height:100%;
-    background-color:#000;
-    opacity:0.9;
+body div.header .wireguard-logo {
+    height: 150px;
 }
 
-.inputbox {
-    border:2px solid #464646;
-    padding:5px;
-    width:300px;
-    color:#fff;
-    background-color:#000;
-    border-radius:0px;
-    transition: all 0.5s;
-    font-weight:normal;
+body div.header h1 {
+    text-decoration: underline;
 }
 
-.inputbox_small {
-    border:2px solid #464646;
-    padding:1px;
-    width:150px;
-    color:#fff;
-    background-color:#000;
-    border-radius:1px;
-    transition: all 0.5s;
-    font-weight:normal;
+/* Main Page Columns */
+body div.column {
+    padding: 40px;
+    padding-left: 70px;
+    padding-right: 70px;
+    margin: 20px;
+    margin-right: 30px;
+    margin-bottom: 70px;
+    font-size: 20px;
+    float: right;
+    width: 45%;
 }
 
-.inputbox:focus,.inputbox:hover {
-    border:2px solid blue;
-    color:#fff;
-    background-color:#000;
-    font-weight:bold;
+body div.column.about-wireguard-manager {
+    background-color: #e4e4e4;
+    height: 475px;
+    float: left;
 }
 
-.inputbox_small:focus,.inputbox_small:hover {
-    border:2px solid blue;
-    color:#fff;
-    background-color:#000;
-    font-weight:bold;
+body div.column.about-wireguard-manager h1 {
+    text-decoration: underline;
 }
 
-h2,.labelc,h1,h3,h4,h5 {
-    padding:0px;
-    margin:0px;
-    color:#fff;
+body div.column .api-information hr {
+    color: black;
+    border: 1px solid black;
+    border-radius: 25%;
 }
 
-.btn-normal {
-    padding:5px 40px;
-    color:#fff;
-    background-color:#000;
-    transition: all 0.5s;
-    border-radius:5px;
-    border:2px solid #fff;
-    text-decoration:none;
-    font-weight:bold;
-    cursor:pointer;
+body .api-information span.label {
+    display: block;
+    font-size: 10px;
+    color: #88171a;
+}
+body .api-information span.value {
+    display: block;
+    font-size: 10px;
 }
 
-.btn-normal:focus,.btn-normal:hover {
-    color:#000;
-    border:2px solid #000;
-    background-color:#fff;
-    text-decoration:none;
+
+/* landing page selection */
+body div.navigation-section {
+    text-align: center;
+    padding-left: 70px;
+    padding-right: 70px;
+    margin-right: 30px;
+    margin-bottom: 70px;
+    font-size: 20px;
+}
+
+body a.navigation-card {
+    float: left;
+    padding: 10px;
+    margin: 10px;
+    background-color: #e4e4e4;
+    width: 150px;
+    height: 150px;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+}
+
+body a.navigation-card:hover {
+    border: 2px solid black;
+    border-radius: 2%;
+    background-color: #e0e0e0;
+}
+
+body a.navigation-card span.navigation-card-text {
+    text-align: center;
+    margin-top: auto;
+}
+
+/* System page styles */
+body div.column.system-page-content {
+    background-color: #e4e4e4;
+    width: 98%;
+    float: left;
+    padding: 40px;
+}
+body div.column.system-page-content h3 {
+    text-align: center;
+}
+body div.column.system-page-content div.controls {
+    text-align: center;
+    display: block;
+    float: right;
+    padding: 5px;
+}
+body div.column.system-page-content div.controls button {
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    padding: 10px;
+}
+body div.column.system-page-content div.controls .add {
+    background-color: darkgreen;
+}
+body div.column.system-page-content div.controls .refresh {
+    background-color: grey;
+}
+
+
+
+/* table styles */
+body table.system-page-table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+   /* border-top: 1px solid #656565;*/
+}
+body table.system-page-table tbody {
+    font-size: 15px;
+    border-top: 1px solid #656565;
+}
+body table.system-page-table tbody tr {
+    border-bottom: 1px solid #656565;
+    background-color: #d1cfcf;
+}
+body table.system-page-table tbody tr:hover {
+    background-color: #dbdbdb;
+}
+body table.system-page-table td {
+    padding: 10px;
+    margin-bottom: 1px;
+}
+body table.system-page-table td.no-padding {
+    margin-bottom: 1px;
+    text-align: right;
+    width: 50px;
+}
+body table.system-page-table td.no-padding a {
+    color: #333;
 }

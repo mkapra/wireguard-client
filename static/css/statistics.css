@@ -1,0 +1,46 @@
+body table.system-stats-table {
+    width: 45%;
+    text-align: center;
+    border-collapse: collapse;
+    float: left;
+}
+body table.system-stats-table.right {
+    width: 45%;
+    text-align: center;
+    border-collapse: collapse;
+    float: right;
+}
+body table.system-stats-table.no-border {
+    width: 45%;
+    text-align: center;
+    border: none;
+    float: left;
+}
+body table.system-stats-table tbody {
+    font-size: 15px;
+    border-top: 1px solid #656565;
+}
+body table.system-stats-table.no-border tbody {
+    font-size: 15px;
+    border-top: none;
+}
+body table.system-stats-table tbody tr {
+    border-bottom: 1px solid #656565;
+    background-color: #d1cfcf;
+}
+body table.system-stats-table.no-border tbody tr {
+    background-color: #e4e4e4;
+    border-bottom: none;
+}
+body table.system-stats-table td {
+    padding: 10px;
+    margin-bottom: 1px;
+}
+
+body div#api_response_duration_chart {
+    height: 250px;
+    margin: 0 auto;
+}
+body div.chart {
+    margin: 0 auto;
+}

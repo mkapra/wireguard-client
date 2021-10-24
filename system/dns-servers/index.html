@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+    	<meta charset="utf-8"/>
+		<title>DNS Servers</title>
+        <link rel="shortcut icon" type="image/jpg" href="/static/img/favicon.ico"/>
+
+		<link rel="stylesheet" href="/static/css/main.css"/>
+        <link rel="stylesheet" href="/static/css/nav.css"/>
+        <link rel="stylesheet" href="/static/css/icons.css"/>
+
+        <script src="/static/js/global.js"></script>
+        <script src="/static/js/apiClient.js"></script>
+        <script src="/static/js/nav.js"></script>
+        <script src="/static/js/table.js"></script>
+
+  	</head>
+	<body onload="check_api_connection(); init_nav(); init_footer();">
+        <nav class="sidenav" id="main_page_navigation"></nav>
+        <div class="main">
+            <div class="header">
+                <img src="/static/img/wireguard.svg" class="wireguard-logo" alt="WireGuard Logo (www.wireguard.com)">
+            </div>
+            <div class="column system-page-content">
+                <h3>DNS-Servers</h3>
+                <div class="controls">
+                    <button class="add" href="/system/dns-servers/add.html">Add</button>
+                    <button class="refresh" onclick="build_table();">Reload</button>
+                </div>
+                <table class="system-page-table" id="table_to_search" onload="build_table();">
+                    <thead>
+                        <tr>
+                            <td>#</td>
+                            <td>IP Address</td>
+                        </tr>
+                    </thead>
+                    <tbody id="content_table_body"></tbody>
+                </table>
+            </div>
+        </div>
+        <footer class="main_page_footer">
+            <div class="footer-container">
+                <div class="api-information">
+                    <table>
+                        <tr>
+                            <td><span class="label">Connected to: </span></td>
+                            <td><span class="value" id="current_api_connection_url"></span></td>
+                            <td><span class="label">API Version: </span></td>
+                            <td><span class="value" id="current_api_connection_version"></span></td>
+                            <td><span class="label">Last API Call Duration: </span></td>
+                            <td><span class="value" id="last_api_call_response_duration"></span></td>
+                            <td><span class="label">Frontend Version: </span></td>
+                            <td><span class="value" id="current_frontend_version"></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </footer>
+        <script>
+            async function build_table() {
+                tbody = document.getElementById('content_table_body');
+                tbody.innerHTML = "";
+
+                var res = await get_with_fetch(get_api_url() + "/dns_servers");
+                for (i = 0; i < res.length; i++) {
+                    var cur = res[i];
+                    var tr = document.createElement('tr');
+
+                    // actual table data
+                    td = document.createElement('td');
+                    td.innerHTML = cur.id;
+                    tr.appendChild(td);
+
+                    td = document.createElement('td');
+                    td.innerHTML = cur.ip;
+                    tr.appendChild(td);
+
+                    // controls
+                    td = document.createElement('td');
+                    td.innerHTML = "<a href=\"/system/dns-servers/edit.html?id=" + cur.id + "\"><i class=\"gg-pen\"></i></a>";
+                    td.classList.add('no-padding')
+                    tr.appendChild(td);
+
+                    tbody.appendChild(tr);
+                }
+            }
+
+            // load the table
+            document.addEventListener('readystatechange', event => {
+                if (event.target.readyState === "complete") {
+                    build_table();
+                }
+            });
+        </script>
+    </body>
+</html>

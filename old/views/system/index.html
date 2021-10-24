@@ -3,28 +3,15 @@
     <head>
         <meta charset="utf-8">
         <title>WireGuard Interfaces</title>
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
-        <link rel="stylesheet" href="../../static/css/main.css"/>
-		<script src="/static/js/search.js"></script>
+        <link rel="stylesheet" href="/static/css/main.css"/>
+
         <script src="/static/js/global.js"></script>
+        <script src="/static/js/structure.js"></script>
+		<script src="/static/js/table.js"></script>
+        <script src="/static/js/apiClient.js"></script>
     </head>
-    <body onload="getGlobals();">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/views/index.html">WireGuard Connection Manager</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li><a href="/views/interfaces/index.html">Interfaces</a></li>
-                    <li><a href="/views/peers/index.html">Peers</a></li>
-                    <li class="active"><a href="/views/system/index.html">System</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-tasks"></span> <span id="page_header_api_url"></span></a></li>
-                    <li><a href="/views/login/index.html"><span class="glyphicon glyphicon-log-in"></span> BACK</a></li>
-                </ul>
-            </div>
+    <body onload="createNavBody('nav_link_system'); getGlobals();">
+        <nav class="sidenav" id="main_page_navigation_bar">
         </nav>
 		<div class="parent-container" style="height: 100%; padding: 50px;">
             <div class="row" style="margin: 50px;">
@@ -35,13 +22,13 @@
                                 <tr>
                                     <th style="border: none;"><h3 class="card-title">DNS SERVERS</h3></th>
                                     <th style="border: none;">
-                                        <input name="search_input" id="new_dns_server_ip" type="text" placeholder="New DNS-Server" class="inputbox_small"/>
+                                        <input class="general_text_input" name="search_input" id="new_dns_server_ip" type="text" placeholder="New DNS-Server"/>
                                         <a onclick="addDNSServer();"><span class="glyphicon glyphicon-plus"></span></a>
                                     </th>
                                 </tr>
                             </table>
                             <hr style="background-color:#fff;height:1px;margin-top:5px"/>
-                            <table class="table" onload="fillTable('dns_servers', 'dns_server_body');">
+                            <table class="table" onload="buildDNSServerTable();">
                                 <thead>
                                     <tr>
                                         <th style="border: none;">#</th>
@@ -59,6 +46,17 @@
             </div>
         </div>
         <script>
+            
+            // build the dns-server table
+            async function buildDNSServerTable() {
+                var table = document.getElementById('dns_server_body');
+                table.innerHTML = "";
+                var rows = await tableRowsFromAPI('dns_servers');
+
+                for (i = 0; i < rows.length; i++) {
+                    table.appendChild(rows[i]);
+                }
+            }
 
             // post new dns_server to API
             async function addDNSServer() {
@@ -71,18 +69,15 @@
                 data = { ip: dns_server_ip}; 
                 const dns_response = await post_with_fetch("dns_servers", data);
 
-                fillTable('dns_servers', 'dns_server_body');
+                buildDNSServerTable();
             }
 
             // load the table once and be done with it
             document.addEventListener('readystatechange', event => {
                 if (event.target.readyState === "complete") {
-                    fillTable('dns_servers', 'dns_server_body');
+                    buildDNSServerTable();
                 }
             });
-
-            // ask api every second if there are any new updates on the peer
-            //setInterval(getPeers, 1000);
         </script>
     </body>
 </html>

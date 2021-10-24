@@ -1,0 +1,80 @@
+<!-- This is just temporary as a mockup navigation layer -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>WireGuard Interfaces</title>
+        <link rel="shortcut icon" type="image/jpg" href="/static/img/favicon.ico"/>
+        <link rel="stylesheet" href="/static/css/main.css"/>
+        <link rel="stylesheet" href="/static/css/sidenav.css"/>
+
+        <script src="/static/js/global.js"></script>
+        <script src="/static/js/structure.js"></script>
+        <script src="/static/js/table.js"></script>
+        <script src="/static/js/apiClient.js"></script>
+    </head>
+    <body onload="createNavBody('nav_link_interfaces'); getGlobals();">
+        <nav class="sidenav" id="main_page_navigation_bar">
+            <div id="nav_links"></div>
+        </nav>
+        <div class="page-content">
+            <div>
+                <table class="table">
+                    <tr>
+                        <td style="border: none;"><h3 class="card-title">INTERFACES</h3></td>
+                        <td style="border: none;"><input class="general_text_input" name="search_input" id="search_input" type="text" placeholder="Search..." onkeyup="searchTable()"/></td></td>
+                        <td style="border: none;"><p id="search_result_count" style="color: #464640" class="text-success text-center">No Search</p></td>
+                    </tr>
+                </table>
+            </div>
+            <div>
+                <hr style="background-color:#fff;height:1px;margin-top:5px"/>
+                <table class="single_page_table" id="table_to_search" onload="buildInterfaceTable();">
+                    <thead>
+                        <tr>
+                            <th style="border: none;">NAME</th>
+                            <th style="border: none;">DESCRIPTION</th>
+                            <th style="border: none;">PUBLIC KEY</th>
+                            <th style="border: none;"><a href="/views/interfaces/index.html" class="btn-normal"><span class="glyphicon glyphicon-plus-sign"></span> ADD</a></th>
+                        </tr>
+                    </thead>
+                    <tbody id="interface_table_body">
+                        <!-- TO BE FILLED BY FUNCTION -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script>
+            async function buildInterfaceTable() {
+
+                // get data from API
+                const iface_data = await get_interface_list();
+
+                // get table and reset contents
+                var table = document.getElementById("interface_table_body");
+                table.innerHTML = "";
+                var rows = await tableRowsFromAPI(iface_data, ['name', 'description', 'pub_key']);
+
+                // change the contents of a specific row
+                for (i = 0; i < rows.length; i++) {
+                    var children = rows[i].children;
+                    console.log(children.length);
+                   /* for (j = 0; j < children.length; j++) {
+                        var edit_link = document.createElement('td');
+                        edit_link.style.border = "none";
+                        edit_link.innerHTML = "<a href=\"/views/interfaces/edit.html?iface_id=" + rows[i].dataset.apiid + "\"><span class=\"glyphicon glyphicon-pencil\"></span></a>";
+                        rows[i].appendChild(edit_link);
+                    }
+                    table.appendChild(rows[i]); */
+                }
+            }
+
+            // load the table once and be done with it
+            document.addEventListener('readystatechange', event => {
+                if (event.target.readyState === "complete") {
+                    buildInterfaceTable();
+                }
+            });
+        </script>
+    </body>
+</html>
