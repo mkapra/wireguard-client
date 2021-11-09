@@ -39,15 +39,15 @@
 				document.getElementById("connect_button").onclick = async function() {
 					localStorage.setItem('api_url', document.getElementById('api_url_input').value);
 					localStorage.setItem('api_token', document.getElementById('api_token_input').value);
+                    localStorage.setItem('session_start', new Date().getTime());
 
-                    var res = await api_connection_check();
+                    var res = await api_connection_check(true);
                     if (res.success != true) {
                         console.log("API Connection failed: " + res.message);
 
                         document.getElementById("connection_error").style.display = "block";
                         document.getElementById("connection_error_reason").innerHTML = res.message;
                         document.getElementById("api_token_input").value = "";
-                        window.location.replace("/login");
                     } else {
                         window.location.replace("/");
                     }

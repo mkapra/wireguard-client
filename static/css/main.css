@@ -42,17 +42,14 @@ body div.column.about-wireguard-manager {
     height: 475px;
     float: left;
 }
-
 body div.column.about-wireguard-manager h1 {
     text-decoration: underline;
 }
-
 body div.column .api-information hr {
     color: black;
     border: 1px solid black;
     border-radius: 25%;
 }
-
 body .api-information span.label {
     display: block;
     font-size: 10px;
@@ -73,7 +70,6 @@ body div.navigation-section {
     margin-bottom: 70px;
     font-size: 20px;
 }
-
 body a.navigation-card {
     float: left;
     padding: 10px;
@@ -85,13 +81,11 @@ body a.navigation-card {
     text-align: center;
     text-decoration: none;
 }
-
 body a.navigation-card:hover {
     border: 2px solid black;
     border-radius: 2%;
     background-color: #e0e0e0;
 }
-
 body a.navigation-card span.navigation-card-text {
     text-align: center;
     margin-top: auto;
@@ -124,15 +118,52 @@ body div.column.system-page-content div.controls .add {
 body div.column.system-page-content div.controls .refresh {
     background-color: grey;
 }
+body div.column.system-page-content div.controls .cancel {
+    background-color: red;
+}
+body div.column.system-page-content div.controls .search-input {
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    padding: 10px;
+}
+body div.column.system-page-content div.search_display {
+    text-align: center;
+    display: block;
+    margin-top: 25px;
+}
+body div.column.system-page-content div.search_display div.search_result_count {
+    text-decoration: wavy;
+}
 
 
 
 /* table styles */
+
+/* Table for adding things */
+body table.add-page-table {
+    margin: auto;
+    text-align: center;
+    border-collapse: collapse;
+}
+body table.add-page-table tbody {
+    font-size: 15px;
+    border-top: 1px solid #656565;
+}
+body table.add-page-table tbody tr {
+    border-bottom: 1px solid #656565;
+    border-top: 1px solid #656565;
+    background-color: #d1cfcf;
+}
+body table.add-page-table td {
+    padding: 10px;
+    margin-bottom: 1px;
+}
+
+/* Default Table for displaying things */
 body table.system-page-table {
     width: 100%;
     text-align: center;
     border-collapse: collapse;
-   /* border-top: 1px solid #656565;*/
 }
 body table.system-page-table tbody {
     font-size: 15px;

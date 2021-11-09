@@ -4,6 +4,12 @@ body table.system-stats-table {
     border-collapse: collapse;
     float: left;
 }
+body table.system-stats-table td.text-right {
+    text-align: right;
+}
+body table.system-stats-table td.text-left {
+    text-align: left;
+}
 body table.system-stats-table.right {
     width: 45%;
     text-align: center;

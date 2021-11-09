@@ -49,7 +49,7 @@
                             <td><span class="label">API Version: </span></td>
                             <td><span class="value" id="current_api_connection_version"></span></td>
                             <td><span class="label">Last API Call Duration: </span></td>
-                            <td><span class="value" id="last_api_call_response_duration"></span></td>
+                            <td><span class="value" id="last_api_call_response_duration">-- ms</span></td>
                             <td><span class="label">Frontend Version: </span></td>
                             <td><span class="value" id="current_frontend_version"></span></td>
                         </tr>
@@ -99,8 +99,8 @@
                         points_sent.unshift({x: formattedTime, y: cur[timestamp].sent / 1024 / 1024});
                         points_recv.unshift({x: formattedTime, y: cur[timestamp].recv / 1024 / 1024});
                     }
-                    series_sent.unshift({name: pkey, points: points_sent.reverse()});
-                    series_recv.unshift({name: pkey, points: points_recv.reverse()});
+                    series_sent.unshift({name: pkey.substring(0, 5), points: points_sent.reverse()});
+                    series_recv.unshift({name: pkey.substring(0, 5), points: points_recv.reverse()});
                 }
 
                 // create chart

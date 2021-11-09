@@ -37,7 +37,11 @@ function searchTable() {
         document.getElementById("search_result_count").innerHTML = "No Search";
         document.getElementById("search_result_count").style.color = "#464640";
     } else {
-        document.getElementById("search_result_count").innerHTML = search_result_count + " results";
+        if (search_result_count > 2 || search_result_count == 0) {
+            document.getElementById("search_result_count").innerHTML = search_result_count + " results";
+        } else {
+            document.getElementById("search_result_count").innerHTML = search_result_count + " result";
+        }
         if (search_result_count > 0) {
             document.getElementById("search_result_count").style.color = "green";
         } else {

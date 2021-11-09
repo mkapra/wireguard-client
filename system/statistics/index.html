@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 	<head>
     	<meta charset="utf-8"/>
-		<title>System Statistics</title>
+		<title>Frontend Statistics</title>
         <link rel="shortcut icon" type="image/jpg" href="/static/img/favicon.ico"/>
 
 		<link rel="stylesheet" href="/static/css/main.css"/>
@@ -25,21 +25,44 @@
                 <h3>Frontend Statistics</h3>
                 <table class="system-stats-table">
                     <tbody>
-                        <tr>
-                            <td>Total API calls: </td>
-                            <td><span id="total_api_calls"></span></td>
+                        <tr class="aligned-text">
+                            <td class="text-right">Pages loaded: </td>
+                            <td></td>
+                            <td class="text-left"><span id="total_pages_loaded"></span></td>
+                        </tr>
+                        <tr class="aligned-text">
+                            <td class="text-right">Total API calls: </td>
+                            <td></td>
+                            <td class="text-left"><span id="total_api_calls"></span></td>
                         </tr>
                         <tr>
-                            <td>Average wait time: </td>
-                            <td><span id="average_response_time"></span> ms</td>
+                            <td class="text-right">Average API request time: </td>
+                            <td></td>
+                            <td class="text-left"><span id="average_response_time"></span> ms</td>
                         </tr>
                         <tr>
-                            <td>Total API wait time: </td>
-                            <td><span id="total_api_time"></span> s</td>
+                            <td class="text-right">Time since Session start: </td>
+                            <td></td>
+                            <td class="text-left"><span id="total_session_duration"></span> m</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">Session time spent waiting on API: </td>
+                            <td></td>
+                            <td class="text-left"><span id="total_api_time_percent"></span> %</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">Total API wait time: </td>
+                            <td></td>
+                            <td class="text-left"><span id="total_api_time"></span> s</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right">Total connection checks issued: </td>
+                            <td></td>
+                            <td class="text-left"><span id="total_api_connection_checks"></span> (<span id="total_api_forced_connection_checks"></span> forced)</td>
                         </tr>
                     </tbody>
                 </table>
-                <table class="system-stats-table right no-border">
+                <table class="system-stats-table no-border" style="float: right;">
                     <tbody>
                         <tr>
                             <td><div id="api_response_duration_chart"></div></td>
@@ -58,7 +81,7 @@
                             <td><span class="label">API Version: </span></td>
                             <td><span class="value" id="current_api_connection_version"></span></td>
                             <td><span class="label">Last API Call Duration: </span></td>
-                            <td><span class="value" id="last_api_call_response_duration"></span></td>
+                            <td><span class="value" id="last_api_call_response_duration">-- ms</span></td>
                             <td><span class="label">Frontend Version: </span></td>
                             <td><span class="value" id="current_frontend_version"></span></td>
                         </tr>
@@ -69,11 +92,17 @@
         <script src="/static/js/external/jscharting.js"></script>
         <script>
             async function build_table() {
-                var total_api_calls       = document.getElementById('total_api_calls');
-                var average_response_time = document.getElementById('average_response_time');
-                var total_api_wait_time   = document.getElementById('total_api_time');
+                var total_pages_loaded     = document.getElementById('total_pages_loaded');
+                var total_api_calls        = document.getElementById('total_api_calls');
+                var average_response_time  = document.getElementById('average_response_time');
+                var total_api_wait_time    = document.getElementById('total_api_time');
+                var total_session_duration = document.getElementById('total_session_duration');
+                var total_api_time_percent = document.getElementById('total_api_time_percent');
+                var total_api_connection_checks = document.getElementById('total_api_connection_checks');
+                var total_api_forced_connection_checks = document.getElementById('total_api_forced_connection_checks');
 
                 const api_call_statistic = JSON.parse(localStorage.getItem('api_response_statistic'));
+                const session_start = new Date().getTime() - localStorage.getItem('session_start');
 
                 var art = 0;
                 for (i = 0; i < api_call_statistic.length; i++) {
@@ -82,9 +111,14 @@
                 }
 
 
-                average_response_time.innerHTML = truncateByDecimalPlace(art / api_call_statistic.length, 2);
-                total_api_calls.innerHTML       = api_call_statistic.length;
-                total_api_wait_time.innerHTML   = truncateByDecimalPlace(art / 1000, 2);
+                total_pages_loaded.innerHTML     = localStorage.getItem('pages_loaded');
+                average_response_time.innerHTML  = truncateByDecimalPlace(art / api_call_statistic.length, 2);
+                total_api_calls.innerHTML        = api_call_statistic.length;
+                total_api_wait_time.innerHTML    = truncateByDecimalPlace(art / 1000, 2);
+                total_api_time_percent.innerHTML = truncateByDecimalPlace((art/session_start) * 100, 2);
+                total_session_duration.innerHTML = truncateByDecimalPlace(session_start / 1000 / 60, 2);
+                total_api_connection_checks.innerHTML = localStorage.getItem('api_conncheck_count');
+                total_api_forced_connection_checks.innerHTML = localStorage.getItem('api_forced_conncheck_count');
             }
 
             function build_chart() {
@@ -121,6 +155,7 @@
                     build_chart();
                 }
             });
+            setInterval(build_table, 1000);
         </script>
     </body>
 </html>

@@ -5,6 +5,7 @@ function init_nav() {
         { link: '',                     display_name: 'VPN',                    class: ['nav_section_header'] },
         { link: '/vpn/interfaces',      display_name: 'WireGuard Interfaces',   class: ['navlink'] },
         { link: '/vpn/peers',           display_name: 'WireGuard Peers',        class: ['navlink'] },
+        { link: '/vpn/networks',        display_name: 'VPN Subnets',            class: ['navlink'] },
         { link: '/vpn/statistics',      display_name: 'Traffic Statistics',     class: ['navlink'] },
         { link: '',                     display_name: 'System',                 class: ['nav_section_header'] },
         { link: '/system/dns-servers',  display_name: 'DNS Servers',            class: ['navlink'] },

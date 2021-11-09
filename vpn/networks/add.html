@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+    	<meta charset="utf-8"/>
+		<title>WireGuard VPN Networks</title>
+        <link rel="shortcut icon" type="image/jpg" href="/static/img/favicon.ico"/>
+
+		<link rel="stylesheet" href="/static/css/main.css"/>
+        <link rel="stylesheet" href="/static/css/nav.css"/>
+        <link rel="stylesheet" href="/static/css/icons.css"/>
+
+        <script src="/static/js/global.js"></script>
+        <script src="/static/js/apiClient.js"></script>
+        <script src="/static/js/nav.js"></script>
+
+  	</head>
+    <body onload="check_api_connection(); init_nav(); init_footer();">
+        <nav class="sidenav" id="main_page_navigation"></nav>
+        <div class="main">
+            <div class="header">
+                <img src="/static/img/wireguard.svg" class="wireguard-logo" alt="WireGuard Logo (www.wireguard.com)">
+            </div>
+            <div class="column system-page-content">
+                <h3>Create new VPN network</h3>
+                <table class="add-page-table">
+                    <tbody>
+                        <tr>
+                            <td>Network Address:</td>
+                            <td><input type="text" id="network_addr_input" placeholder="e.g. 192.168.2.0"></input></td>
+                            <td id="network_addr_input_error" style="display: none; color: red;"><span>Field is required!</span></td>
+                        </tr>
+                        <tr>
+                            <td>Netmask:</td>
+                            <td><input type="text" id="network_mask_input" placeholder="e.g. 24"></input></td>
+                            <td id="network_mask_input_error" style="display: none; color: red;"><span>Field is required!</span></td>
+                        </tr>
+                        <tr>
+                            <td>Interface:</td>
+                            <td><input type="text" id="network_iface_input" placeholder="e.g. 24"></input></td>
+                            <td id="network_iface_input_error" style="display: none; color: red;"><span>Field is required!</span></td>
+                        </tr>
+                        <tr>
+                            <td>Listen Port:</td>
+                            <td><input type="text" id="network_port_input" placeholder="e.g. 51820"></input></td>
+                            <td id="network_port_input_error" style="display: none; color: red;"><span>Field is required!</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="controls">
+                    <button class="add" onclick="add_new_network();">Save</button>
+                    <button class="cancel" onclick="window.location.href='/vpn/networks/'">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <footer class="main_page_footer">
+            <div class="footer-container">
+                <div class="api-information">
+                    <table>
+                        <tr>
+                            <td><span class="label">Connected to: </span></td>
+                            <td><span class="value" id="current_api_connection_url"></span></td>
+                            <td><span class="label">API Version: </span></td>
+                            <td><span class="value" id="current_api_connection_version"></span></td>
+                            <td><span class="label">Last API Call Duration: </span></td>
+                            <td><span class="value" id="last_api_call_response_duration">-- ms</span></td>
+                            <td><span class="label">Frontend Version: </span></td>
+                            <td><span class="value" id="current_frontend_version"></span></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </footer>
+        <script type="text/javascript">
+            function add_new_network() {
+                
+                // check for all values
+                var address = document.getElementById('network_addr_input');
+                var netmask = document.getElementById('network_mask_input');
+                var interface = document.getElementById('network_iface_input');
+                var port = document.getElementById('network_port_input');
+
+                if (address.value == '') {
+                    address.style.borderColor = 'red';
+                }
+                if (netmask.value == '') {
+                    netmask.style.borderColor = 'red';
+                }
+                if (interface.value == '') {
+                    interface.style.borderColor = 'red';
+                }
+                if (port.value == '') {
+                    port.style.borderColor = 'red';
+                }
+            }
+        </script>
+    </body>
+</html>

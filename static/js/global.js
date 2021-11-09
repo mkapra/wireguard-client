@@ -43,3 +43,21 @@ function append_api_request_duration_statistic(logtime, duration) {
         localStorage.setItem('api_response_statistic', JSON.stringify(stat));
     }
 }
+
+// Validation functions
+function validate_ipv4(addr) {
+    if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(addr)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function validate_weburl(url) {
+    try {
+        var test_url = new URL(url);
+    } catch (_) {
+        return false;
+    }
+    return true;
+}

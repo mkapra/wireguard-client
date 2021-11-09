@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 	<head>
     	<meta charset="utf-8"/>
-		<title>DNS Servers</title>
+		<title>Add DNS Server</title>
         <link rel="shortcut icon" type="image/jpg" href="/static/img/favicon.ico"/>
 
 		<link rel="stylesheet" href="/static/css/main.css"/>
@@ -12,31 +12,28 @@
         <script src="/static/js/global.js"></script>
         <script src="/static/js/apiClient.js"></script>
         <script src="/static/js/nav.js"></script>
-        <script src="/static/js/table.js"></script>
 
   	</head>
-	<body onload="check_api_connection(); init_nav(); init_footer();">
+    <body onload="check_api_connection(); init_nav(); init_footer();">
         <nav class="sidenav" id="main_page_navigation"></nav>
         <div class="main">
             <div class="header">
                 <img src="/static/img/wireguard.svg" class="wireguard-logo" alt="WireGuard Logo (www.wireguard.com)">
             </div>
             <div class="column system-page-content">
-                <h3>DNS-Servers</h3>
-                <div class="controls">
-                    <input class="search-input" id="search_input" value="" placeholder="Search DNS-Servers..." onkeyup="searchTable();"/>
-                    <button class="add" onclick="window.location.href='/system/dns-servers/add.html'">Add</button>
-                    <button class="refresh" onclick="build_table();">Reload</button>
-                </div>
-                <table class="system-page-table" id="table_to_search">
-                    <thead>
+                <h3>Add DNS Server</h3>
+                <table class="add-page-table">
+                    <tbody>
                         <tr>
-                            <td>#</td>
-                            <td>IP Address</td>
+                            <td>DNS Server Address:</td>
+                            <td><input type="text" id="dns_server_addr_input" placeholder="e.g. 192.168.2.0"></input></td>
                         </tr>
-                    </thead>
-                    <tbody id="content_table_body"></tbody>
+                    </tbody>
                 </table>
+                <div class="controls">
+                    <button class="add" onclick="save();">Save</button>
+                    <button class="cancel" onclick="window.location.href='/system/dns-servers/'">Cancel</button>
+                </div>
                 <div class="search_display">
                     <div class="search_result_count" id="search_result_count"></div>
                 </div>
@@ -60,42 +57,39 @@
                 </div>
             </div>
         </footer>
-        <script>
-            async function build_table() {
-                tbody = document.getElementById('content_table_body');
-                tbody.innerHTML = "";
+        <script type="text/javascript">
+            async function save() {
+                
+                // check for all values
+                var address = document.getElementById('dns_server_addr_input');
+                var data = false;
+                if (validate_ipv4(address.value)) {
+                    data = {
+                        ip: address.value
+                    }
+                } else {
+                    var error = document.getElementById('search_result_count');
+                    error.innerHTML = "Invalid IP Address";
+                    error.style.color = "red";
+                    address.style.borderColor = 'red';
+                }
 
-                var res = await get_with_fetch(get_api_url() + "/dns_servers");
-                for (i = 0; i < res.length; i++) {
-                    var cur = res[i];
-                    var tr = document.createElement('tr');
+                // if we have data, we can post
+                if (data != false) {
+                    // post to the API
+                    const res = await post_with_fetch('dns_servers', data);
 
-                    // actual table data
-                    td = document.createElement('td');
-                    td.innerHTML = cur.id;
-                    tr.appendChild(td);
-
-                    td = document.createElement('td');
-                    td.innerHTML = cur.ip;
-                    tr.appendChild(td);
-
-                    // controls
-                    td = document.createElement('td');
-                    td.innerHTML = "<a href=\"/system/dns-servers/edit.html?id=" + cur.id + "\"><i class=\"gg-pen\"></i></a>";
-                    td.classList.add('no-padding')
-                    tr.appendChild(td);
-
-                    tbody.appendChild(tr);
+                    // check for api error
+                    if (res.error) {
+                        var error = document.getElementById('search_result_count');
+                        error.innerHTML = "Failed to create new DNS-Server: " + res.message;
+                        error.style.color = "red";
+                    
+                    } else {
+                        window.location.href = "/system/dns-servers";
+                    }
                 }
             }
-
-            // load the table
-            document.addEventListener('readystatechange', event => {
-                if (event.target.readyState === "complete") {
-                    build_table();
-                    searchTable();
-                }
-            });
         </script>
     </body>
 </html>

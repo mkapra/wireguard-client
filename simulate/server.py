@@ -11,7 +11,7 @@ def trafficstats(interface_id):
     global_trafficstats_recv_bytes_two = 46636508
     global_trafficstats_sent_bytes_two = 275215716
 
-    timestamps = [1635079347, 1635209347, 1636202401, 1635043500]
+    timestamps = [1635079347, 1635209347, 1636202401, 1635043500, 1635044500]
     trafficstats = {}
 
     for t in timestamps:

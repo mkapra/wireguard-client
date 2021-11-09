@@ -1,25 +1,37 @@
 // api connection check
-async function api_connection_check() {
+async function api_connection_check(force = false) {
     var res = {
         success: true,
         message: "connected"
     }
 
+    if (force == true) {
+        var forced_connection_checks = localStorage.getItem('api_forced_conncheck_count') || 0;
+        forced_connection_checks++;
+        localStorage.setItem('api_forced_conncheck_count', forced_connection_checks);
+    }
+
     // validate the api url
-    try {
-        url = new URL(get_api_url());
-    } catch (_) {
+    if (! validate_weburl(get_api_url())) {
         res.success = false;
         res.message = "Invalid API URL!";
         console.log(res.message);
         return res;
     }
 
+    // uncomment for testing with actual API
+    return res;
+
     // avoid spamming the API with connection checks
     var count = localStorage.getItem('api_conncheck') || 0;
-    count++;
-    localStorage.setItem('api_conncheck', count.toString());
-    if (localStorage.getItem('api_conncheck') < 10) {
+    if (count < 10 && count != 0 && force == false) {
+        count++;
+        localStorage.setItem('api_conncheck', count.toString());
+        return res;
+    }
+    if (count < 10 && count == 0 && force == false) {
+        count++;
+        localStorage.setItem('api_conncheck', count.toString());
         return res;
     }
 
@@ -31,6 +43,9 @@ async function api_connection_check() {
         console.log(res.message);
         return res;
     } else {
+        var connection_checks = localStorage.getItem('api_conncheck_count') || 0;
+        connection_checks++;
+        localStorage.setItem('api_conncheck_count', connection_checks);
         localStorage.setItem('api_conncheck', 0);
     }
 

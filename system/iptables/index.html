@@ -22,7 +22,12 @@
             </div>
             <div class="column system-page-content">
                 <h3>Rulesets</h3>
-                <table class="system-page-table" id="table_to_search" onload="build_table();">
+                <div class="controls">
+                    <input class="search-input" id="search_input" value="" placeholder="Search Rulesets..." onkeyup="searchTable();"/>
+                    <button class="add" onclick="window.location.href='/system/iptables/add.html'">Add</button>
+                    <button class="refresh" onclick="build_table();">Reload</button>
+                </div>
+                <table class="system-page-table" id="table_to_search">
                     <thead>
                         <tr>
                             <td>#</td>
@@ -30,6 +35,9 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+                <div class="search_display">
+                    <div class="search_result_count" id="search_result_count"></div>
+                </div>
             </div>
         </div>
         <footer class="main_page_footer">
@@ -42,7 +50,7 @@
                             <td><span class="label">API Version: </span></td>
                             <td><span class="value" id="current_api_connection_version"></span></td>
                             <td><span class="label">Last API Call Duration: </span></td>
-                            <td><span class="value" id="last_api_call_response_duration"></span></td>
+                            <td><span class="value" id="last_api_call_response_duration">-- ms</span></td>
                             <td><span class="label">Frontend Version: </span></td>
                             <td><span class="value" id="current_frontend_version"></span></td>
                         </tr>
@@ -63,6 +71,7 @@
             document.addEventListener('readystatechange', event => {
                 if (event.target.readyState === "complete") {
                     build_table();
+                    searchTable();
                 }
             });
         </script>
