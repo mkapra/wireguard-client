@@ -36,10 +36,10 @@ function init_nav() {
         // add css classes
         for (j = 0; j < cur.class.length; j++) {
             new_item.classList.add(cur.class[j]);
-            new_item.innerHTML = cur.display_name;
         }
 
         // add to the navbar
+        new_item.innerHTML = cur.display_name;
         nav.appendChild(new_item);
     }
 
