@@ -19,8 +19,8 @@ async function api_connection_check(force = false) {
         return res;
     }
 
-    // uncomment for testing with actual API
-    return res;
+    //uncomment for testing with actual API, since it does not currently support all required features
+    //return res;
 
     // avoid spamming the API with connection checks
     var count = localStorage.getItem('api_conncheck') || 0;

@@ -22,7 +22,16 @@
                 <img src="/static/img/wireguard.svg" class="wireguard-logo" alt="WireGuard Logo (www.wireguard.com)">
             </div>
             <div class="column system-page-content">
-                <h3>DNS-Servers</h3>
+                <h3 class="tooltip">DNS Servers
+                    <span class="tooltiptext">
+                        <p>
+                            DNS Servers are a means of creating a set of IP-Addresses which are then used when creating a peer for setting the dns paramenter inside of the peers wireguard configuration file. This ensures that DNS traffic also flows into the wireguard tunnel, preventing DNS leakages.
+                        </p>
+                        <p>
+                            <b>Remeber to allow DNS-Traffic to the desired IP-Address in the firewall and ACL settings.</b>
+                        </p>
+                    </span>
+                </h3>
                 <div class="controls">
                     <input class="search-input" id="search_input" value="" placeholder="Search DNS-Servers..." onkeyup="searchTable();"/>
                     <button class="add" onclick="window.location.href='/system/dns-servers/add.html'">Add</button>

@@ -9,6 +9,7 @@ nav.sidenav {
     overflow-x: hidden; 
     padding-top: 20px;
     margin-top: 20px;
+    border-radius: 2px;
 }
   
 nav.sidenav a.navlink {

@@ -21,7 +21,20 @@
                 <img src="/static/img/wireguard.svg" class="wireguard-logo" alt="WireGuard Logo (www.wireguard.com)">
             </div>
             <div class="column system-page-content">
-                <h3>Rulesets</h3>
+                <h3 class="tooltip">Firewall (ACL)
+                    <span class="tooltiptext">
+                        <p>
+                            Firewall rules are used as a form of ACL in order to restrict a peers or peer groups access to a certain server or service.
+                        </p>
+                        <p>
+                            The official WGCM server-side API client implementation uses <em>iptables</em> to control access of specific peers to certain servers and services.
+                            <b>If you are using <em>any</em> other server-side API client implementation WGCM can not guarantee this behaviour and therefore the security of these ACL's.</b>
+                        </p>
+                        <p>
+                            Created firewall rules are represented in a WGCM-specific format within the API's database. When writing own software to integrate with WGCM adhere to these standards to ensure proper functionality and security. 
+                        </p>
+                    </span>
+                </h3>
                 <div class="controls">
                     <input class="search-input" id="search_input" value="" placeholder="Search Rulesets..." onkeyup="searchTable();"/>
                     <button class="add" onclick="window.location.href='/system/iptables/add.html'">Add</button>

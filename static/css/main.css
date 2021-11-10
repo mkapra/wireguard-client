@@ -6,6 +6,32 @@ body {
     font-family: "Helvetica", sans-serif;
 }
 
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 34%;
+    margin-left: 2%;
+    background-color: rgb(180, 180, 180);
+    color: #000;
+    
+    padding: 5px 0;
+
+    text-align: center;
+    font-size: 15px;
+    text-decoration: none;
+    font-weight: normal;
+
+    position: absolute;
+    z-index: 1;
+    opacity: 0.96;
+
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
 /* Header Title */
 body div.header {
     padding: 40px;
@@ -14,6 +40,7 @@ body div.header {
     margin: 20px;
     font-size: 20px;
     width: 98%;
+    border-radius: 2px;
 }
 
 body div.header .wireguard-logo {
@@ -35,6 +62,7 @@ body div.column {
     font-size: 20px;
     float: right;
     width: 45%;
+    border-radius: 2px;
 }
 
 body div.column.about-wireguard-manager {
@@ -116,7 +144,7 @@ body div.column.system-page-content div.controls .add {
     background-color: darkgreen;
 }
 body div.column.system-page-content div.controls .refresh {
-    background-color: grey;
+    background-color: rgb(124, 124, 124);
 }
 body div.column.system-page-content div.controls .cancel {
     background-color: red;

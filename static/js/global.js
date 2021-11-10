@@ -15,7 +15,6 @@ function get_api_url() {
 function get_api_token() {
     return localStorage.getItem('api_token');
 }
-
 function get_frontend_version() {
     return '0.0 (testing)';
 }
